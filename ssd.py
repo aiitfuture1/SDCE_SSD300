@@ -282,6 +282,6 @@ def SSD300(input_shape, num_classes=21):
     net['predictions'] = concatenate([net['mbox_loc'],
                                net['mbox_conf'],
                                net['mbox_priorbox']],
-                                    axis=1)
+                                    axis=2)
     model = Model(net['input'], net['predictions'])
     return model
