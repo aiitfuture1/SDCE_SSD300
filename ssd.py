@@ -9,7 +9,8 @@ from keras.layers import Flatten
 from keras.layers import GlobalAveragePooling2D
 from keras.layers import Input
 from keras.layers import MaxPooling2D
-from keras.layers import merge
+#from keras.layers import merge
+from keras.layers import concatenate
 from keras.layers import Reshape
 from keras.layers import ZeroPadding2D
 from keras.models import Model
