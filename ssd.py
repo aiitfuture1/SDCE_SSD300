@@ -248,27 +248,27 @@ def SSD300(input_shape, num_classes=21):
                                     name='pool6_reshaped')(net['pool6'])
     net['pool6_mbox_priorbox'] = priorbox(net['pool6_reshaped'])
     # Gather all predictions
-    net['mbox_loc'] = concatenate([net['conv4_3_norm_mbox_loc_flat'],
-                             net['fc7_mbox_loc_flat'],
-                             net['conv6_2_mbox_loc_flat'],
-                             net['conv7_2_mbox_loc_flat'],
-                             net['conv8_2_mbox_loc_flat'],
-                             net['pool6_mbox_loc_flat']],
-                                 axis=-1)
+    net['mbox_loc'] =  concatenate([net['conv4_3_norm_mbox_loc_flat'],
+                         net['fc7_mbox_loc_flat'],
+                         net['conv6_2_mbox_loc_flat'],
+                         net['conv7_2_mbox_loc_flat'],
+                         net['conv8_2_mbox_loc_flat'],
+                         net['pool6_mbox_loc_flat']],
+                         axis=1)
     net['mbox_conf'] = concatenate([net['conv4_3_norm_mbox_conf_flat'],
-                              net['fc7_mbox_conf_flat'],
-                              net['conv6_2_mbox_conf_flat'],
-                              net['conv7_2_mbox_conf_flat'],
-                              net['conv8_2_mbox_conf_flat'],
-                              net['pool6_mbox_conf_flat']],
-                                  axis=-1)
+                          net['fc7_mbox_conf_flat'],
+                          net['conv6_2_mbox_conf_flat'],
+                          net['conv7_2_mbox_conf_flat'],
+                          net['conv8_2_mbox_conf_flat'],
+                          net['pool6_mbox_conf_flat']],
+                          axis=1)
     net['mbox_priorbox'] = concatenate([net['conv4_3_norm_mbox_priorbox'],
-                                  net['fc7_mbox_priorbox'],
-                                  net['conv6_2_mbox_priorbox'],
-                                  net['conv7_2_mbox_priorbox'],
-                                  net['conv8_2_mbox_priorbox'],
-                                  net['pool6_mbox_priorbox']],
-                                      axis=-1)
+                              net['fc7_mbox_priorbox'],
+                              net['conv6_2_mbox_priorbox'],
+                              net['conv7_2_mbox_priorbox'],
+                              net['conv8_2_mbox_priorbox'],
+                              net['pool6_mbox_priorbox']],
+                              axis=1)
     if hasattr(net['mbox_loc'], '_keras_shape'):
         num_boxes = net['mbox_loc']._keras_shape[-1] // 4
     elif hasattr(net['mbox_loc'], 'int_shape'):
@@ -282,6 +282,6 @@ def SSD300(input_shape, num_classes=21):
     net['predictions'] = concatenate([net['mbox_loc'],
                                net['mbox_conf'],
                                net['mbox_priorbox']],
-                                    axis=-1)
+                                    axis=1)
     model = Model(net['input'], net['predictions'])
     return model
